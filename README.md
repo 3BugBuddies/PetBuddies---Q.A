@@ -1,8 +1,8 @@
 # Pet Buddies - Sprint 4 (Compliance, QA & Tests)
 
 ## Links de entrega
-- Azure Boards (testes manuais): <cole o link do Overview > Summary>
-- Vídeo da automação: <cole o link do vídeo>
+- Azure Boards:
+- Vídeo da automação: 
 
 ## Testes manuais
 Planejados e executados no Azure Boards / Test Plans: um plano por Sprint e uma suíte por PBI, com dados de entrada e saída (Parameter values), passos e resultados esperados e relatórios de Outcome e Run by. Os prints estão em /evidencias.
