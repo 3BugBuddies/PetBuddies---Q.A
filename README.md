@@ -1,6 +1,11 @@
 # Pet Buddies - Sprint 4 (Compliance, QA & Tests)
 
-**Integrantes:** Felipe Yuiti Ishii (RM 565339), Gabriel Nogueira Peixoto (RM 563925), Giovanna Neri dos Santos (RM 566154), Mariana Inoue (RM 565834)
+Integrantes:
+Nome	RM
+Felipe Yuiti Ishii	RM 565339
+Gabriel Nogueira	RM 563925
+Giovanna Neri dos Santos	RM 566154
+Mariana Inoue	RM 565834
 
 ## Links de entrega
 - Azure Boards (testes manuais): <cole o link do Overview > Summary>
