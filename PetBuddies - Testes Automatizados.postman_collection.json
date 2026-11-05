@@ -1,0 +1,177 @@
+{
+  "info": {
+    "_postman_id": "bdc150a4-bdab-4290-9002-738521fa8bb4",
+    "name": "PetBuddies - Testes Automatizados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54667097",
+    "_collection_link": "https://go.postman.co/collection/54667097-bdc150a4-bdab-4290-9002-738521fa8bb4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "CTA-01: Login válido",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Responde em menos de 2s\", () =>\r\n    pm.expect(pm.response.responseTime).to.be.below(2000));\r\nconst body = pm.response.json();\r\nconst token = body.token || body.accessToken;\r\npm.test(\"Retorna token JWT\", () => pm.expect(token).to.be.a(\"string\").and.not.empty);\r\npm.environment.set(\"token\", token);\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"login\": \"{{emailVet}}\",\r\n  \"senha\": \"{{senhaVet}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CTA-02: Login com senha incorreta",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Acesso negado (401 ou 403)\", () =>\r\n    pm.expect([401, 403]).to.include(pm.response.code));\r\npm.test(\"Não retorna token\", () =>\r\n    pm.expect(pm.response.text()).to.not.include(\"token\"));\r\n    "
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"login\": \"{{emailVet}}\",\r\n  \"senha\": \"string\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CTA-03: Cadastrar Tutor",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status de sucesso (200 ou 201)\", () =>\r\n    pm.expect([200, 201]).to.include(pm.response.code));\r\npm.test(\"Responde em menos de 2s\", () =>\r\n    pm.expect(pm.response.responseTime).to.be.below(2000));\r\nconst body = pm.response.json();\r\npm.test(\"Retorna id\", () => pm.expect(body).to.have.property(\"id\"));\r\npm.environment.set(\"tutorId\", body.id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nome\": \"Felipe Ishii\",\r\n  \"telefone\": \"11987654321\",\r\n  \"email\": \"felipe@email.com\",\r\n  \"endereco\": \"Rua da Avenida\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/responsavel",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "responsavel"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CTA-04: Consultar Tutor",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r\npm.test(\"Responde em menos de 2s\", () =>\r\n    pm.expect(pm.response.responseTime).to.be.below(2000));\r\nconst body = pm.response.json();\r\npm.test(\"Retorna o item criado\", () =>\r\n    pm.expect(String(body.id)).to.eql(String(pm.environment.get(\"tutorId\"))));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/responsavel/{{tutorId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "responsavel",
+            "{{tutorId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
